@@ -1,0 +1,25 @@
+.home-container {
+  padding: 200px;
+  background-color: hsl(216, 76%, 90%);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.home-title {
+  color: #295d91;
+  font-size: 80px;
+  font-weight: bold;
+}
+
+.home-container-1 {
+  padding: 800px;
+  background-color: hsl(210, 20%, 96%);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.details {
+  color: #295d91;
+  font-size: 80px;
+  font-weight: bold;
+}
