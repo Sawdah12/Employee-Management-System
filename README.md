@@ -1,91 +1,218 @@
-# Employee Management System (MERN Stack)
+# Employee Management System
 
-
-![Screenshot 2024-02-08 at 4 43 23 PM](https://github.com/ShivankK26/Employee-Management-System/assets/115289871/14bb5756-3a17-47e3-8051-c66a676582b8)
-
-
-The Employee Management System is a web application built using the MERN (MongoDB, Express.js, React.js, Node.js) stack. It enables users to perform CRUD (Create, Read, Update, Delete) operations related to employee records efficiently.
-
-## Features
-
-- **Create**: Add new employee records with relevant details.
-- **Read**: View existing employee records with their information.
-- **Update**: Modify employee details such as name, position, and contact information.
-- **Delete**: Remove employee records from the system.
-
-## Technologies Used
-
-- **MongoDB**: NoSQL database for storing employee information.
-- **Express.js**: Backend framework for handling HTTP requests and routing.
-- **React.js**: Frontend library for building user interfaces.
-- **Node.js**: JavaScript runtime environment for server-side development.
-
-## Installation
-
-To run the Employee Management System on your local machine, follow these steps:
-
-1. Clone the repository to your local machine:
-
-   ```bash
-   git clone https://github.com/ShivankK26/Employee-Management-System .
-   ```
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd Employee-Management-System
-   ```
-
-3. Install server-side dependencies:
-
-   ```bash
-   cd server
-   npm install
-   ```
-
-4. Install client-side dependencies:
-
-   ```bash
-   cd ../client
-   npm install
-   ```
-
-5. Start the MongoDB server on your local machine.
-
-6. Start the backend server:
-
-   ```bash
-   cd ../server
-   nodemon index.js
-   ```
-
-7. Start the frontend application:
-
-   ```bash
-   cd ../client
-   npm run dev
-   ```
-
-8. Access the Employee Management System in your browser at `http://localhost:5173`.
-
-## Usage
-
-Once the application is running, you can perform the following actions:
-
-- **Create Employee**: Click on the "Add Employee" button to create a new employee record.
-- **Read Employee**: View the list of existing employees along with their details.
-- **Update Employee**: Click on the "Edit" button next to an employee record to modify the details.
-- **Delete Employee**: Click on the "Delete" button to remove an employee from the system.
-
-## Contributing
-
-Contributions to the Employee Management System are welcome! To contribute:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes and ensure tests pass.
-4. Submit a pull request detailing the changes made and any relevant information.
+A full-stack CRUD application to manage employee records, built with **React**, **Node.js/Express**, and **PostgreSQL**, following a clean 3-tier architecture.
 
 ---
 
-Manage your employee records efficiently with the Employee Management System built using the powerful MERN stack. Simplify CRUD operations and streamline your workflow today!
+## 📌 Overview
+
+This system allows users to **create, view, search, edit, and delete** employee records through a simple, responsive interface. It demonstrates a complete separation of concerns between the presentation layer, business logic layer, and data layer.
+
+---
+
+## 🏗️ 3-Tier Architecture
+
+This project strictly follows a 3-tier architecture:
+
+| Tier | Technology | Responsibility |
+|------|-----------|-----------------|
+| **Presentation Tier** | React | Renders the UI, handles user input, displays employee data |
+| **Business Tier** | Node.js + Express (REST API) | Handles request validation, business logic, and routes data between the frontend and the database |
+| **Data Tier** | PostgreSQL | Stores and persists all employee records |
+
+**Request Flow:**
+
+```
+Browser (React) → HTTP/REST API (Express) → Business Logic → PostgreSQL Database
+```
+
+> ⚠️ **Important:** React never communicates directly with the database. All data operations (Create, Read, Update, Delete) go strictly through the backend REST API.
+
+---
+
+## 🛠️ Tech Stack
+
+**Frontend**
+- React
+- React Router DOM
+- React Bootstrap
+- React Toastify (notifications)
+
+**Backend**
+- Node.js
+- Express.js
+- pg (node-postgres)
+
+**Database**
+- PostgreSQL
+
+**Deployment**
+- Docker & Docker Compose
+
+---
+
+## 📁 Project Structure
+
+```
+Employee Management System/
+├── backend/
+│   ├── server.js          # Express server & REST API routes
+│   ├── db.js               # PostgreSQL connection config
+│   ├── Dockerfile
+│   └── package.json
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── employee-list.jsx
+│   │   │   ├── employee-form.jsx
+│   │   │   ├── employee-card.jsx
+│   │   │   └── navbar.jsx
+│   │   ├── pages/
+│   │   │   └── home/
+│   │   ├── services/
+│   │   │   └── employeeApi.js
+│   │   └── App.jsx
+│   ├── Dockerfile
+│   └── package.json
+├── db.sql                  # Database schema
+├── docker-compose.yml
+└── README.md
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18+)
+- [PostgreSQL](https://www.postgresql.org/)
+- [Docker](https://www.docker.com/) (optional, for containerized setup)
+
+---
+
+### Option 1: Run Locally (without Docker)
+
+#### 1. Database Setup
+
+1. Open **pgAdmin** or `psql` and create a database:
+   ```sql
+   CREATE DATABASE employee_db;
+   ```
+2. Run the schema from `db.sql` to create the `employees` table:
+   ```sql
+   CREATE TABLE employees (
+       id SERIAL PRIMARY KEY,
+       name VARCHAR(100),
+       email VARCHAR(100),
+       department VARCHAR(100),
+       role VARCHAR(100),
+       status VARCHAR(50)
+   );
+   ```
+3. Update your credentials in `backend/db.js`:
+   ```javascript
+   const pool = new Pool({
+     user: 'postgres',
+     host: 'localhost',
+     database: 'employee_db',
+     password: 'your_password',
+     port: 5432,
+   });
+   ```
+
+#### 2. Backend Setup
+
+```bash
+cd backend
+npm install
+node server.js
+```
+
+Backend runs on → `http://localhost:5000`
+
+#### 3. Frontend Setup
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Frontend runs on → `http://localhost:5173`
+
+---
+
+### Option 2: Run with Docker
+
+From the project root (where `docker-compose.yml` is located):
+
+```bash
+docker-compose up --build
+```
+
+This will spin up three containers:
+- PostgreSQL database
+- Backend API (port `5000`)
+- Frontend app (port `5173`)
+
+Access the app at → `http://localhost:5173`
+
+---
+
+## 🔗 API Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|--------------|
+| `GET` | `/api/employees` | Get all employees |
+| `GET` | `/api/employees/:id` | Get a single employee by ID |
+| `POST` | `/api/employees` | Create a new employee |
+| `PUT` | `/api/employees/:id` | Update an existing employee |
+| `DELETE` | `/api/employees/:id` | Delete an employee |
+
+**Sample Response** (`GET /api/employees`):
+```json
+[
+  {
+    "id": 1,
+    "name": "Sara",
+    "email": "sara@gmail.com",
+    "department": "HR",
+    "role": "Junior HR",
+    "status": "Active"
+  }
+]
+```
+
+---
+
+## ✨ Features
+
+- ✅ Create new employee records via a form
+- ✅ View all employees in a responsive card layout
+- ✅ Search/filter employees by name, email, department, or role
+- ✅ Edit existing employee details
+- ✅ Delete employees with confirmation prompt
+- ✅ Toast notifications for success/error feedback
+- ✅ Loading and error states for better UX
+
+---
+
+## 📸 Screenshots
+
+> Add your screenshots below (place image files in a `screenshots/` folder in the repo root)
+
+**Employee List**
+![Employee List](./screenshots/employee-list.png)
+
+**Create Employee**
+![Create Employee](./screenshots/create-employee.png)
+
+**Edit Employee**
+![Edit Employee](./screenshots/edit-employee.png)
+
+---
+
+## 👩‍💻 Author
+
+Developed by Sawdah as a personal/academic project to practice full-stack development with React, Express, and PostgreSQL using 3-tier architecture principles.
